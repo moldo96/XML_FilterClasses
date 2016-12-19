@@ -1,0 +1,6 @@
+c:\users\student\documents\visual studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.exe.config
+C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.exe
+C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.pdb
+C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.csprojResolveAssemblyReference.cache
+C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.exe
+C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.pdb
