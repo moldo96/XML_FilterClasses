@@ -28,8 +28,8 @@ namespace XMLFilter_Classes
         public void ComputeCoverage(string pathName, string modulesToExcludeMask)
         {
             XmlDocument xmlDocument = LoadXmlDocument(pathName);
-            IEnumerable<XmlNode> moduleNodes = Filter.FilterNodes("Module", xmlDocument.DocumentElement); //returneaza o lista cu toate nodurile numite  Module
-            IEnumerable<ModuleCoverageInfo> moduleCoverageInfo = FilterByName(moduleNodes, modulesToExcludeMask);
+            IEnumerable<XmlNode> filteredModuleNodes = Filter.FilterNodes(xmlDocument, "Module", modulesToExcludeMask);
+            IEnumerable<ModuleCoverageInfo> moduleCoverageInfo = CreateModuleCoverageInfo(filteredModuleNodes);
             foreach (ModuleCoverageInfo mci in moduleCoverageInfo)
             {
                 Console.WriteLine(mci.ModuleName);
@@ -99,29 +99,12 @@ namespace XMLFilter_Classes
             return Filter.FilterNodes(stringh, node).First().InnerText;
         }
 
-        private IEnumerable<ModuleCoverageInfo> FilterByName(IEnumerable<XmlNode> moduleNodes, string stringEnding)
+        private IEnumerable<ModuleCoverageInfo> CreateModuleCoverageInfo(IEnumerable<XmlNode> moduleNodes)
         {
             foreach (XmlNode moduleNode in moduleNodes)
             {
-                if (FullfillsNameCondition(stringEnding, moduleNode))
-                {
-                    ModuleCoverageInfo moduleCoverageInfo = CreateModuleCoverageInfoFromXmlNode(moduleNode);
-                    yield return moduleCoverageInfo;
-                }
+                yield return CreateModuleCoverageInfoFromXmlNode(moduleNode);
             }
-        }
-
-        private bool FullfillsNameCondition(string stringEnding, XmlNode moduleNode)
-        {
-            bool fulfillsCondition = false;
-            foreach (XmlNode childNode in moduleNode)
-            {
-                if (Filter.NodeNameHasValue(childNode, "ModuleName") && !Regex.Match(childNode.InnerText, @stringEnding + "$").Success)
-                {
-                    fulfillsCondition = true;
-                }
-            }
-            return fulfillsCondition;
         }
 
         private ModuleCoverageInfo CreateModuleCoverageInfoFromXmlNode(XmlNode node)
