@@ -4,3 +4,12 @@ C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Fi
 C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.exe
 C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.pdb
 C:\Users\student\Documents\Visual Studio 2012\Projects\XML_Filter_Classes\XML_Filter_Classes\obj\Debug\XMLFilter_Classes.csprojResolveAssemblyReference.cache
+D:\XML_Filter_Classesv4\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.exe.config
+D:\XML_Filter_Classesv4\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.exe
+D:\XML_Filter_Classesv4\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.pdb
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.exe.config
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.exe
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\obj\Debug\XML_Filter_Classes.pdb
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.exe
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\bin\Debug\XML_Filter_Classes.pdb
+C:\Users\student\Documents\GitHub\XML_FilterClasses\XML_Filter_Classes\obj\Debug\XMLFilter_Classes.csprojResolveAssemblyReference.cache

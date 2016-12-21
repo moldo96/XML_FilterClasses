@@ -12,6 +12,7 @@ namespace XMLFilter_Classes
     {
         private Filter Filter { get; set; }
 
+
         public XmlFilteringReader(Filter filter)
         {
             Filter = filter;  
@@ -21,24 +22,27 @@ namespace XMLFilter_Classes
         {
             XmlDocument xmlDocument = new XmlDocument();
             xmlDocument.Load(pathName);
-            return xmlDocument;
+            return xmlDocument;     
         }
 
         public void ComputeCoverage(string pathName, string modulesToExcludeMask)
         {
             XmlDocument xmlDocument = LoadXmlDocument(pathName);
-            IEnumerable<XmlNode> filteredNodes = Filter.FilterNodes("Module", xmlDocument.DocumentElement);
-            foreach (XmlNode node in filteredNodes)
+            IEnumerable<XmlNode> moduleNodes = Filter.FilterNodes("Module", xmlDocument.DocumentElement); //returneaza o lista cu toate nodurile numite  Module
+            IEnumerable<ModuleCoverageInfo> moduleCoverageInfo = FilterByName(moduleNodes, modulesToExcludeMask);
+            foreach (ModuleCoverageInfo mci in moduleCoverageInfo)
             {
-                EliminateRequestedModule(modulesToExcludeMask, node);
+                Console.WriteLine(mci.ModuleName);
+                Reading(mci);
             }
+            Console.ReadKey();
         }
 
-        private void Reading(XmlNode node)
+        private void Reading(ModuleCoverageInfo mci)
         {
             Console.Write("\n");
-            Search(node, "ModuleName");
-            foreach (XmlNode childNode in node)
+            Search(mci.nodeOfModule, "ModuleName");
+            foreach (XmlNode childNode in mci.nodeOfModule)
             {
                 if (Filter.NodeNameHasValue(childNode, "NamespaceTable"))
                 {
@@ -61,10 +65,12 @@ namespace XMLFilter_Classes
                 string string_name = "";
 
                 XmlDocument xmlDocument = node.OwnerDocument;
-
+                // TODO instantiere de clasa noua
+                // search sa fie facut de clasa noua
                 string_name = GetNameData(xmlDocument, node, string_to_find);
                 noOfBlocksCovered = GetNumberData(xmlDocument, node, "BlocksCovered");
                 noOfBlocksNotCovered = GetNumberData(xmlDocument, node, "BlocksNotCovered");
+                
                 string_to_find = string_to_find.Remove(string_to_find.Length - 4);
                 if (string_to_find == "Class")
                 {
@@ -93,20 +99,39 @@ namespace XMLFilter_Classes
             return Filter.FilterNodes(stringh, node).First().InnerText;
         }
 
-        private void EliminateRequestedModule(string stringEnding, XmlNode childNode)
+        private IEnumerable<ModuleCoverageInfo> FilterByName(IEnumerable<XmlNode> moduleNodes, string stringEnding)
         {
-            //TODO si daca nu e primul? :1st attempt
-            foreach (XmlNode node1 in childNode)
+            foreach (XmlNode moduleNode in moduleNodes)
             {
-                if (Filter.NodeNameHasValue(node1, "ModuleName"))
+                if (FullfillsNameCondition(stringEnding, moduleNode))
                 {
-                    Match m = Regex.Match(node1.InnerText, @stringEnding + "$");
-                    if (!m.Success)
-                    {
-                        Reading(childNode);
-                    }
+                    ModuleCoverageInfo moduleCoverageInfo = CreateModuleCoverageInfoFromXmlNode(moduleNode);
+                    yield return moduleCoverageInfo;
                 }
             }
+        }
+
+        private bool FullfillsNameCondition(string stringEnding, XmlNode moduleNode)
+        {
+            bool fulfillsCondition = false;
+            foreach (XmlNode childNode in moduleNode)
+            {
+                if (Filter.NodeNameHasValue(childNode, "ModuleName") && !Regex.Match(childNode.InnerText, @stringEnding + "$").Success)
+                {
+                    fulfillsCondition = true;
+                }
+            }
+            return fulfillsCondition;
+        }
+
+        private ModuleCoverageInfo CreateModuleCoverageInfoFromXmlNode(XmlNode node)
+        {
+            ModuleCoverageInfo moduleCoverageInfo = new ModuleCoverageInfo();
+            moduleCoverageInfo.ModuleName = GetNameData(node.OwnerDocument, node, "ModuleName");
+            moduleCoverageInfo.noOfBlocksCovered = GetNumberData(node.OwnerDocument, node, "BlocksCovered");
+            moduleCoverageInfo.noOfBlocksNotCovered = GetNumberData(node.OwnerDocument, node, "BlocksNotCovered");
+            moduleCoverageInfo.nodeOfModule = node;
+            return moduleCoverageInfo;
         }
     }
 }

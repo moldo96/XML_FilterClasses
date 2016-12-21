@@ -12,12 +12,6 @@ namespace XMLFilter_Classes
         public IEnumerable<XmlNode> FilterNodes(string nodeName, XmlNode rootNode)
         {
             ThrowExceptionIfNodeHasNoChildren(rootNode);
-            return FilterChildNodesByName(nodeName, rootNode);
-        }
-
-        private IEnumerable<XmlNode> FilterChildNodesByName(string nodeName, XmlNode rootNode)
-        {
-            ThrowExceptionIfNodeHasNoChildren(rootNode);
             foreach (XmlNode childNode in rootNode)
             {
                 if (NodeNameHasValue(childNode, nodeName))
